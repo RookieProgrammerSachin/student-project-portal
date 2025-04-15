@@ -1,0 +1,19 @@
+{
+  "env": {
+    "node": true,
+    "browser": true,
+    "commonjs": true,
+    "es2021": true,
+    "jest": true
+  },
+  "extends": ["eslint:recommended", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2022
+  },
+  "rules": {
+    "no-console": ["warn", { "allow": ["info", "warn", "error"] }],
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "next|^_" }],
+    "no-var": "error",
+    "prefer-const": "warn"
+  }
+}

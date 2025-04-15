@@ -1,0 +1,309 @@
+/* Base styles */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: #a0aec0; /* Muted gray */
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #718096; /* Darker gray */
+}
+
+/* Dynamic row layouts using Grid */
+.dynamic-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto; /* Item description, cost, remove button */
+    gap: 0.75rem; /* Tailwind gap-3 */
+    margin-bottom: 1rem; /* Tailwind mb-4 */
+    padding-bottom: 1rem; /* Tailwind pb-4 */
+    border-bottom: 1px dashed #e5e7eb; /* Tailwind border-b border-dashed border-gray-200 */
+}
+.dynamic-row-stakeholder {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto; /* Name, Role, remove button */
+    gap: 0.75rem; /* Tailwind gap-3 */
+    margin-bottom: 0.75rem; /* Tailwind mb-3 */
+}
+
+/* Justification textarea spanning full width in budget row */
+.budget-justification {
+    grid-column: 1 / -1; /* Span across all columns */
+    margin-top: -0.5rem; /* Adjust spacing */
+    margin-bottom: 0.5rem;
+}
+
+/* Center remove button vertically */
+.remove-row-btn {
+    align-self: center;
+    color: #ef4444; /* Tailwind red-500 */
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: color 0.2s ease;
+}
+.remove-row-btn:hover {
+    color: #b91c1c; /* Tailwind red-700 */
+}
+
+/* Word Count Styling */
+.word-count {
+    font-size: 0.75rem; /* Tailwind text-xs */
+    color: #6b7280; /* Tailwind gray-500 */
+    text-align: right;
+    margin-top: 0.25rem; /* Tailwind mt-1 */
+}
+.word-count.limit-exceeded {
+    color: #DC2626; /* Tailwind red-600 */
+    font-weight: bold;
+}
+
+/* Modal styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+    padding-top: 5vh; /* Adjust vertical centering */
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: auto; /* Centered */
+    padding: 2rem; /* Tailwind p-8 */
+    border: 1px solid #ddd;
+    width: 90%;
+    max-width: 800px; /* Increased max-width */
+    border-radius: 0.5rem; /* Tailwind rounded-lg */
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+}
+
+/* Formatted text area inside modal */
+#formattedProposalText {
+    min-height: 250px;
+    max-height: 50vh;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: monospace;
+    background-color: #f9fafb; /* Tailwind gray-50 */
+    border: 1px solid #d1d5db; /* Tailwind gray-300 */
+    border-radius: 0.375rem; /* Tailwind rounded-md */
+    padding: 0.75rem; /* Tailwind p-3 */
+    font-size: 0.875rem; /* Tailwind text-sm */
+}
+
+/* Input and Textarea Focus Ring */
+input:focus, textarea:focus, select:focus {
+     outline: none;
+     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* Tailwind's focus:ring-blue-500 equivalent */
+     border-color: #3B82F6; /* Tailwind blue-500 */
+}
+
+/* Styling for form sections */
+.form-section {
+    /* Uses Tailwind color from config: theme('colors.dominant-bg-alt') */
+    background-color: var(--color-dominant-bg-alt, #FFFFFF); /* Fallback */
+    /* Uses Tailwind color from config: theme('colors.secondary-border') */
+    border: 1px solid var(--color-secondary-border, #7DD3FC); /* Fallback */
+    border-radius: 0.5rem; /* Tailwind rounded-lg */
+    padding: 1.5rem; /* Tailwind p-6 */
+    margin-bottom: 1.5rem; /* Tailwind mb-6 */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: relative; /* Needed for absolute positioning of icons */
+}
+.form-section h2 {
+    /* Uses Tailwind color from config: theme('colors.secondary-text') */
+    color: var(--color-secondary-text, #0369A1); /* Fallback */
+     /* Uses Tailwind color from config: theme('colors.secondary-bg') */
+    border-bottom: 2px solid var(--color-secondary-bg, #E0F2FE); /* Fallback */
+    padding-bottom: 0.5rem; /* Tailwind pb-2 */
+    margin-bottom: 1rem; /* Tailwind mb-4 */
+    font-size: 1.25rem; /* Tailwind text-xl */
+    font-weight: 600; /* Tailwind font-semibold */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* General input styling */
+.form-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem; /* Tailwind px-3 py-2 */
+    border: 1px solid #d1d5db; /* Tailwind border-gray-300 */
+    border-radius: 0.375rem; /* Tailwind rounded-md */
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* General Button Styling */
+.btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.375rem; /* Tailwind rounded-md */
+    font-weight: 500; /* Tailwind font-medium */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    cursor: pointer;
+    text-align: center; /* Ensure text is centered */
+}
+
+/* Primary Button (Amber) */
+.btn-primary {
+    /* Uses Tailwind color from config: theme('colors.accent-main') */
+    background-color: var(--color-accent-main, #F59E0B); /* Fallback */
+    color: white;
+}
+.btn-primary:hover {
+     /* Uses Tailwind color from config: theme('colors.accent-hover') */
+    background-color: var(--color-accent-hover, #D97706); /* Fallback */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+/* Secondary Button (Sky Blue) */
+.btn-secondary {
+     /* Uses Tailwind color from config: theme('colors.secondary-accent') */
+    background-color: var(--color-secondary-accent, #38BDF8); /* Fallback */
+    color: white;
+}
+.btn-secondary:hover {
+    /* Uses Tailwind color from config: theme('colors.secondary-text') */
+    background-color: var(--color-secondary-text, #0369A1); /* Fallback */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+/* Button style for Add Item/Stakeholder */
+.btn-add-item {
+     /* Uses Tailwind color from config: theme('colors.secondary-bg') */
+    background-color: var(--color-secondary-bg, #E0F2FE); /* Fallback */
+    /* Uses Tailwind color from config: theme('colors.secondary-text') */
+    color: var(--color-secondary-text, #0369A1); /* Fallback */
+    /* Uses Tailwind color from config: theme('colors.secondary-border') */
+    border: 1px solid var(--color-secondary-border, #7DD3FC); /* Fallback */
+    padding: 0.3rem 0.8rem; /* Adjusted padding */
+    font-weight: 500; /* Tailwind font-medium */
+    font-size: 0.875rem; /* Tailwind text-sm */
+    cursor: pointer;
+    border-radius: 0.375rem; /* Tailwind rounded-md */
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    display: inline-flex; /* Align icon and text */
+    align-items: center;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.btn-add-item:hover {
+     /* Uses Tailwind color from config: theme('colors.secondary-accent') */
+    background-color: var(--color-secondary-accent, #38BDF8); /* Fallback */
+    color: white; /* White text on hover */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.btn-add-item i {
+    margin-right: 0.3rem; /* Space between icon and text */
+}
+
+/* Admin Button (Indigo) */
+.btn-admin {
+    background-color: #6366f1; /* Tailwind indigo-500 */
+    color: white;
+}
+.btn-admin:hover {
+    background-color: #4f46e5; /* Tailwind indigo-600 */
+}
+
+
+/* --- Admin/Student View Simulation Styles --- */
+/* Hide admin/student specific elements by default */
+.admin-only, .student-only {
+    display: none;
+}
+
+/* Show admin items when body has 'admin-logged-in' class */
+body.admin-logged-in .admin-only {
+    display: inline-block; /* Use inline-block for icons/buttons */
+}
+
+/* Show student items when body does NOT have 'admin-logged-in' class */
+body:not(.admin-logged-in) .student-only {
+    display: block; /* Use block for inputs/sections */
+}
+
+/* Fine-tune display for specific elements if needed */
+body.admin-logged-in .admin-only-button {
+    display: inline-block;
+}
+body.admin-logged-in .admin-only-icon {
+    display: inline-block;
+    font-size: 0.9em;
+    margin-left: 8px;
+    color: #6366f1; /* Tailwind indigo-500 */
+    cursor: pointer; /* Indicate interactivity (though simulated) */
+}
+body.admin-logged-in .admin-only-icon:hover {
+    color: #4f46e5; /* Tailwind indigo-600 */
+}
+
+/* Ensure form is visible in both views */
+body:not(.admin-logged-in) #proposalForm {
+    display: block;
+}
+body.admin-logged-in #proposalForm {
+    display: block;
+}
+
+/* Style for the simulated login area */
+#loginArea {
+    background-color: #f3f4f6; /* Tailwind gray-100 */
+    padding: 1rem; /* Tailwind p-4 */
+    border-radius: 0.5rem; /* Tailwind rounded-lg */
+    margin-bottom: 1.5rem; /* Tailwind mb-6 */
+    border: 1px solid #e5e7eb; /* Tailwind border-gray-200 */
+}
+#loginArea input {
+    margin-right: 0.5rem; /* Tailwind mr-2 */
+}
+
+/* Add fallbacks for custom Tailwind colors used via theme() */
+:root {
+  --color-dominant-bg-alt: #FFFFFF;
+  --color-secondary-border: #7DD3FC;
+  --color-secondary-text: #0369A1;
+  --color-secondary-bg: #E0F2FE;
+  --color-accent-main: #F59E0B;
+  --color-accent-hover: #D97706;
+  --color-secondary-accent: #38BDF8;
+}
+
+/* Apply theme colors using CSS variables */
+.form-section { background-color: var(--color-dominant-bg-alt); border: 1px solid var(--color-secondary-border); }
+.form-section h2 { color: var(--color-secondary-text); border-bottom: 2px solid var(--color-secondary-bg); }
+.btn-primary { background-color: var(--color-accent-main); }
+.btn-primary:hover { background-color: var(--color-accent-hover); }
+.btn-secondary { background-color: var(--color-secondary-accent); }
+.btn-secondary:hover { background-color: var(--color-secondary-text); }
+.btn-add-item { background-color: var(--color-secondary-bg); color: var(--color-secondary-text); border: 1px solid var(--color-secondary-border); }
+.btn-add-item:hover { background-color: var(--color-secondary-accent); color: white; }
+
