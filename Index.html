@@ -10,18 +10,46 @@
 
     <link rel="stylesheet" href="style.css" referrerpolicy="origin">
     <link rel="stylesheet" href="tailwindcss.css">
-
+    <style>
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+        .logo-container img {
+            height: 50px;
+        }
+    </style>
 </head>
 
 <body class="bg-dominant-bg font-sans p-4 sm:p-8">
+    <!-- Simplified Navbar with only Sairam logo -->
+    <div class="navbar max-w-5xl mx-auto rounded-lg">
+        <div class="logo-container">
+            <img src="sairamlogo.png" alt="Sairam Logo">
+        </div>
+        <div id="authButtons">
+            <!-- Login button will be shown by default -->
+           <button id="loginButton" class="btn btn-secondary px-3 py-1 text-xs">
+                <i class="fas fa-sign-in-alt mr-1"></i> Login
+            </button>
+            
+            <!-- Logout button will be hidden until logged in -->
+            <button id="logoutButton" class="btn btn-secondary px-3 py-1 text-xs" style="display: none;">
+                <i class="fas fa-sign-out-alt mr-1"></i> Logout
+            </button>
+        </div>
+    </div>
 
-    <div id="userHeader" class="max-w-5xl mx-auto mb-4 flex justify-between items-center">
+    <!-- User header - will be hidden by default -->
+    <div id="userHeader" class="max-w-5xl mx-auto mb-4 flex justify-between items-center" style="display: none;">
         <div>
             <p class="text-green-700 font-semibold">Logged in as Admin</p>
         </div>
-        <button id="logoutButton" class="btn btn-secondary px-3 py-1 text-xs">
-            <i class="fas fa-sign-out-alt mr-1"></i> Logout
-        </button>
     </div>
 
     <div class="container mx-auto max-w-5xl bg-dominant-bg-alt rounded-xl shadow-lg p-6 md:p-10 border border-gray-200">
@@ -250,25 +278,81 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
     <script>
-        // Logout functionality
-        document.getElementById('logoutButton').addEventListener('click', function() {
-            fetch('/api/auth/logout', {
-                method: 'POST',
-                credentials: 'include'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Redirect to login page after logout
-                    window.location.href = '/login';
-                }
-            })
-            .catch(error => {
-                console.error('Logout error:', error);
+        // Check login status when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+            
+            // Handle login button click
+            document.getElementById('loginButton').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.location.href = '/login';
+            });
+            
+            // Handle logout button click
+            document.getElementById('logoutButton').addEventListener('click', function() {
+                // Send logout request to the server
+                fetch('/api/auth/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update UI for logged out state
+                        updateUIForLoggedOut();
+                    }
+                })
+                .catch(error => {
+                    console.error('Logout error:', error);
+                });
             });
         });
+        
+        // Function to check login status
+        function checkLoginStatus() {
+            // Check for auth token in cookies
+            const cookies = document.cookie.split(';');
+            let hasToken = false;
+            
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith('token=')) {
+                    hasToken = true;
+                    break;
+                }
+            }
+            
+            if (hasToken) {
+                updateUIForLoggedIn();
+            } else {
+                updateUIForLoggedOut();
+            }
+        }
+        
+        // Update UI for logged in state
+        function updateUIForLoggedIn() {
+            document.getElementById('loginButton').style.display = 'none';
+            document.getElementById('logoutButton').style.display = 'inline-block';
+            document.getElementById('userHeader').style.display = 'flex';
+            document.body.classList.add('admin-logged-in');
+        }
+        
+        // Update UI for logged out state
+        function updateUIForLoggedOut() {
+            document.getElementById('loginButton').style.display = 'inline-block';
+            document.getElementById('logoutButton').style.display = 'none';
+            document.getElementById('userHeader').style.display = 'none';
+            document.body.classList.remove('admin-logged-in');
+        }
+        
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById('proposalModal').style.display = 'none';
+        }
+        
+        // Rest of your existing JavaScript
+        // ... existing code ...
     </script>
 </body>
 

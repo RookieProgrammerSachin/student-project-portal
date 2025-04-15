@@ -100,12 +100,7 @@ app.use('/api/ai', aiRoutes);
 
 // Login route
 app.get('/login', (req, res) => {
-  // Check if user is already logged in
-  const token = req.cookies.token;
-  if (token === 'mock-jwt-token') {
-    // If already logged in, redirect to home page
-    return res.redirect('/');
-  }
+  // Simply serve the login page without checking token status
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
@@ -119,9 +114,14 @@ const isAuthenticated = (req, res, next) => {
   res.redirect('/login');
 };
 
-// Serve the frontend (protected route)
-app.get('/', isAuthenticated, (req, res) => {
+// Serve the frontend - no longer protected by default
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'Index.html'));
+});
+
+// Protected admin routes
+app.get('/admin/*', isAuthenticated, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin', 'index.html'));
 });
 
 // 404 handler
