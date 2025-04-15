@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Student Project Portal</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="tailwindcss.css">
+    
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            background-color: white;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn-login {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-login:hover {
+            background-color: #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-dominant-bg font-sans">
+    <div class="login-container">
+        <h1 class="text-2xl font-bold text-center text-secondary-text mb-6">Student Project Portal</h1>
+        
+        <div id="loginError" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 hidden">
+            <p id="errorMessage">Invalid credentials. Please try again.</p>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username" class="block text-sm font-medium text-text-label mb-1">Username</label>
+                <input type="text" id="username" name="username" class="form-input w-full" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password" class="block text-sm font-medium text-text-label mb-1">Password</label>
+                <input type="password" id="password" name="password" class="form-input w-full" placeholder="Enter your password" required>
+                <p class="text-xs text-gray-500 mt-1">Use 'admin' / 'password' for demo.</p>
+            </div>
+            
+            <button type="submit" class="btn-login">
+                Login <i class="fas fa-sign-in-alt ml-2"></i>
+            </button>
+        </form>
+    </div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Send login request to the server
+            fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password }),
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Redirect to main page on successful login
+                    window.location.href = '/';
+                } else {
+                    // Show error message
+                    document.getElementById('errorMessage').textContent = data.message || 'Login failed. Please try again.';
+                    document.getElementById('loginError').classList.remove('hidden');
+                }
+            })
+            .catch(error => {
+                console.error('Login error:', error);
+                document.getElementById('errorMessage').textContent = 'An error occurred. Please try again.';
+                document.getElementById('loginError').classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+</html> 

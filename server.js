@@ -48,7 +48,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Security middleware
-app.use(helmet()); // Add security headers
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com"],
+      fontSrc: ["'self'", "cdnjs.cloudflare.com"],
+      imgSrc: ["'self'", "data:"],
+      connectSrc: ["'self'"]
+    }
+  }
+})); // Add security headers
 app.use(cors({
   origin: process.env.CORS_ORIGIN || ['http://localhost:3000', 'https://student-portal.example.com'],
   credentials: true,
@@ -87,8 +98,29 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/proposals', proposalRoutes);
 app.use('/api/ai', aiRoutes);
 
-// Serve the frontend
-app.get('/', (req, res) => {
+// Login route
+app.get('/login', (req, res) => {
+  // Check if user is already logged in
+  const token = req.cookies.token;
+  if (token === 'mock-jwt-token') {
+    // If already logged in, redirect to home page
+    return res.redirect('/');
+  }
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+// Authentication middleware for protected routes
+const isAuthenticated = (req, res, next) => {
+  const token = req.cookies.token;
+  if (token === 'mock-jwt-token') {
+    return next();
+  }
+  // Redirect to login if not authenticated
+  res.redirect('/login');
+};
+
+// Serve the frontend (protected route)
+app.get('/', isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, 'Index.html'));
 });
 

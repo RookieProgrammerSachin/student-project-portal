@@ -15,22 +15,13 @@
 
 <body class="bg-dominant-bg font-sans p-4 sm:p-8">
 
-    <div id="loginArea" class="max-w-md mx-auto text-sm">
-        <div id="loginForm">
-            <h3 class="font-semibold mb-2 text-text-label">Admin Login (Simulation)</h3>
-            <input type="text" id="username" placeholder="Username (admin)"
-                class="form-input inline-block w-auto px-2 py-1">
-            <input type="password" id="password" placeholder="Password (password)"
-                class="form-input inline-block w-auto px-2 py-1">
-            <button id="loginButton" class="btn btn-secondary px-3 py-1 text-xs">Login</button>
-            <p class="text-xs text-gray-500 mt-1">Use 'admin' / 'password' for demo.</p>
+    <div id="userHeader" class="max-w-5xl mx-auto mb-4 flex justify-between items-center">
+        <div>
+            <p class="text-green-700 font-semibold">Logged in as Admin</p>
         </div>
-        <div id="loggedInMessage" class="hidden">
-            <p class="text-green-700 font-semibold">Logged in as Admin. <button id="logoutButton"
-                    class="text-xs text-blue-600 underline ml-2">(Logout)</button></p>
-            <p class="text-xs text-gray-600 mt-1">Admin controls (edit icons, add field button) are now visible
-                (simulation only).</p>
-        </div>
+        <button id="logoutButton" class="btn btn-secondary px-3 py-1 text-xs">
+            <i class="fas fa-sign-out-alt mr-1"></i> Logout
+        </button>
     </div>
 
     <div class="container mx-auto max-w-5xl bg-dominant-bg-alt rounded-xl shadow-lg p-6 md:p-10 border border-gray-200">
@@ -260,6 +251,25 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // Logout functionality
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            fetch('/api/auth/logout', {
+                method: 'POST',
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Redirect to login page after logout
+                    window.location.href = '/login';
+                }
+            })
+            .catch(error => {
+                console.error('Logout error:', error);
+            });
+        });
+    </script>
 </body>
 
 </html>
