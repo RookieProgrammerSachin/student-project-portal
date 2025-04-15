@@ -48,18 +48,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Security middleware
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com"],
-      styleSrc: ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com"],
-      fontSrc: ["'self'", "cdnjs.cloudflare.com"],
-      imgSrc: ["'self'", "data:"],
-      connectSrc: ["'self'"]
-    }
-  }
-})); // Add security headers
+// app.use(helmet({
+//   contentSecurityPolicy: {
+//     directives: {
+//       defaultSrc: ["'self'"],
+//       scriptSrc: ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com"],
+//       styleSrc: ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com"],
+//       fontSrc: ["'self'", "cdnjs.cloudflare.com"],
+//       imgSrc: ["'self'", "data:"],
+//       connectSrc: ["'self'"]
+//     }
+//   }
+// })); // Add security headers
 app.use(cors({
   origin: process.env.CORS_ORIGIN || ['http://localhost:3000', 'https://student-portal.example.com'],
   credentials: true,

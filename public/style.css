@@ -18,7 +18,7 @@
 .dynamic-row {
     display: grid;
     grid-template-columns: 1fr auto auto; /* Item description, cost, remove button */
-    gap: 0.75rem; /* Tailwind gap-3 */
+    gap: 1.25rem; /* Tailwind gap-3 */
     margin-bottom: 1rem; /* Tailwind mb-4 */
     padding-bottom: 1rem; /* Tailwind pb-4 */
     border-bottom: 1px dashed #e5e7eb; /* Tailwind border-b border-dashed border-gray-200 */
@@ -26,7 +26,7 @@
 .dynamic-row-stakeholder {
     display: grid;
     grid-template-columns: 1fr 1fr auto; /* Name, Role, remove button */
-    gap: 0.75rem; /* Tailwind gap-3 */
+    gap: 1.25rem; /* Tailwind gap-3 */
     margin-bottom: 0.75rem; /* Tailwind mb-3 */
 }
 

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
     <link rel="stylesheet" href="style.css" referrerpolicy="origin">
-    <link rel="stylesheet" href="tailwindcss.css">
+    <script src="tailwindcss.js"></script>
     <style>
         .navbar {
             display: flex;
@@ -17,9 +17,10 @@
             align-items: center;
             padding: 0.5rem 1rem;
             background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 1.5rem;
         }
+
         .logo-container img {
             height: 50px;
         }
@@ -34,10 +35,10 @@
         </div>
         <div id="authButtons">
             <!-- Login button will be shown by default -->
-           <button id="loginButton" class="btn btn-secondary px-3 py-1 text-xs">
+            <button id="loginButton" class="btn btn-secondary px-3 py-1 text-xs">
                 <i class="fas fa-sign-in-alt mr-1"></i> Login
             </button>
-            
+
             <!-- Logout button will be hidden until logged in -->
             <button id="logoutButton" class="btn btn-secondary px-3 py-1 text-xs" style="display: none;">
                 <i class="fas fa-sign-out-alt mr-1"></i> Logout
@@ -278,43 +279,44 @@
         </div>
     </div>
 
+    <script src="script.js"></script>
     <script>
         // Check login status when page loads
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             checkLoginStatus();
-            
+
             // Handle login button click
-            document.getElementById('loginButton').addEventListener('click', function(e) {
+            document.getElementById('loginButton').addEventListener('click', function (e) {
                 e.preventDefault();
                 document.location.href = '/login';
             });
-            
+
             // Handle logout button click
-            document.getElementById('logoutButton').addEventListener('click', function() {
+            document.getElementById('logoutButton').addEventListener('click', function () {
                 // Send logout request to the server
                 fetch('/api/auth/logout', {
                     method: 'POST',
                     credentials: 'include'
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Update UI for logged out state
-                        updateUIForLoggedOut();
-                    }
-                })
-                .catch(error => {
-                    console.error('Logout error:', error);
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Update UI for logged out state
+                            updateUIForLoggedOut();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Logout error:', error);
+                    });
             });
         });
-        
+
         // Function to check login status
         function checkLoginStatus() {
             // Check for auth token in cookies
             const cookies = document.cookie.split(';');
             let hasToken = false;
-            
+
             for (let i = 0; i < cookies.length; i++) {
                 const cookie = cookies[i].trim();
                 if (cookie.startsWith('token=')) {
@@ -322,14 +324,14 @@
                     break;
                 }
             }
-            
+
             if (hasToken) {
                 updateUIForLoggedIn();
             } else {
                 updateUIForLoggedOut();
             }
         }
-        
+
         // Update UI for logged in state
         function updateUIForLoggedIn() {
             document.getElementById('loginButton').style.display = 'none';
@@ -337,7 +339,7 @@
             document.getElementById('userHeader').style.display = 'flex';
             document.body.classList.add('admin-logged-in');
         }
-        
+
         // Update UI for logged out state
         function updateUIForLoggedOut() {
             document.getElementById('loginButton').style.display = 'inline-block';
@@ -345,12 +347,12 @@
             document.getElementById('userHeader').style.display = 'none';
             document.body.classList.remove('admin-logged-in');
         }
-        
+
         // Function to close the modal
         function closeModal() {
             document.getElementById('proposalModal').style.display = 'none';
         }
-        
+
         // Rest of your existing JavaScript
         // ... existing code ...
     </script>
