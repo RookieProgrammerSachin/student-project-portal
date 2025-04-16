@@ -45,7 +45,7 @@ const aiRoutes = require('./routes/ai');
 
 // Create Express app
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
 
 // Security middleware
 // app.use(helmet({
@@ -61,7 +61,7 @@ const PORT = process.env.PORT || 3000;
 //   }
 // })); // Add security headers
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || ['http://localhost:3000', 'https://student-portal.example.com'],
+  origin: process.env.CORS_ORIGIN || ['http://localhost:3002', 'https://student-portal.example.com'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -158,18 +158,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
 });
-
-// Graceful shutdown handling
-process.on('SIGTERM', gracefulShutdown);
-process.on('SIGINT', gracefulShutdown);
-
-/**
- * Handles graceful server shutdown
- */
-function gracefulShutdown() {
-  console.log('Gracefully shutting down server...');
-  // Close any database connections, finish processing requests, etc.
-  process.exit(0);
-}
 
 module.exports = app; // Export for testing

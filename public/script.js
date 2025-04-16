@@ -660,6 +660,9 @@ function formatProposalAsText(projectID, data) {
     text += `--- PROJECT DETAILS ---\n`;
     text += `Title: ${data.projectTitle}\n\n`;
     text += `Abstract/Summary:\n${data.abstract}\n\n`;
+    text += `----INTRODUCION---\n`;
+    text += `Does ${data.projectTitle} align with the problem statement?\n`;
+    text += `Yes, ${data.projectTitle} aims to provide a solution to the problem statement\n\n`;
     text += `Introduction/Background:\n${data.introduction}\n\n`;
     text += `Objectives:\n${data.objectives}\n\n`;
     text += `Methodology:\n${data.methodology}\n\n`;
@@ -705,7 +708,7 @@ function formatProposalAsText(projectID, data) {
 function closeModal() {
     log("Closing modal.");
     modal.style.display = 'none'; // Hide the modal
-    document.body.style.overflow = 'auto'; // Restore background scrolling
+    document.body.style.overflow = 'unset'; // Restore background scrolling
     // Clear potentially sensitive info from modal elements for security/privacy
     formattedProposalText.value = '';
     projectIDDisplay.textContent = '';
